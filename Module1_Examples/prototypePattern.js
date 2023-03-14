@@ -65,3 +65,31 @@ Person.prototype = {
 };
 
 person1.sayName( ); // error
+
+function Person( ){
+}
+
+Person.prototype = {
+	constructor: Person,
+	name: "Bob",
+	age: 25,
+	job: "Software Engineer",
+	friends: ["Charlie", "Dave"],
+	sayName: function( ){
+		console.log(this.name);
+	}
+};
+
+
+var person1 = new Person( );
+var person2 = new Person( );
+
+console.log(person1.friends); // Charlie, Dave
+console.log(person2.friends); // Charlie, Dave
+
+person1.friends.push("Ed");
+
+console.log(person1.friends); // Charlie, Dave, Ed
+console.log(person2.friends); // Charlie, Dave, Ed
+
+console.log(person1.friends == person2.friends); // true
