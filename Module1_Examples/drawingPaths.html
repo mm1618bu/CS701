@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Path Shapes</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+            // draw a path
+            context.strokeStyle = "#A52A2A";
+            context.lineWidth = 3;
+            context.beginPath();
+            context.moveTo(50,100);
+            context.lineTo(150,100);
+            context.lineTo(100,50);
+            context.lineTo(50,100);
+            context.stroke();
+            context.closePath();
+
+            // fill a path
+            context.fillStyle = "#0000FF";
+            context.beginPath();
+            context.moveTo(200,100);
+            context.lineTo(300,100);
+            context.lineTo(250,50);
+            context.lineTo(200,100);
+            context.fill();
+            context.closePath();
+
+            // rouded joins
+
+            context.strokeStyle = "#A52A2A";
+            context.lineWidth = 10;
+            context.lineJoin = "round";
+            context.beginPath();
+            context.moveTo(50,175);
+            context.lineTo(150,175);
+            context.lineTo(100,125);
+            context.lineTo(50,175);
+            context.stroke();
+            context.closePath();
+        }
+    </script>
+</html>

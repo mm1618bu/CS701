@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Arc</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+        
+            context.strokeStyle = "#A52A2A";
+            context.lineWidth = 3;
+            context.beginPath();
+            context.arc(75,50,40,0,Math.PI,true);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(160,50,40,0,Math.PI,false);
+            context.stroke();
+            context.closePath();
+
+            context.fillStyle = "0000FF";
+            context.beginPath();
+            context.arc(245,50,40,0,Math.PI,true);
+            context.fill();
+            context.closePath();
+            
+            context.beginPath();
+            context.arc(330,50,40,0,Math.PI,false);
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(75,150,40,0,2*Math.PI,true);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.arc(245,150,40,0,2*Math.PI,true);
+            context.fill();
+            context.closePath();
+        }
+    </script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Drawing Text</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+        function init(){
+
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+
+            context.strokeStyle = "#FF0000";
+            context.fillStyle = "0000FF";
+
+            context.font = "24px serif";
+            context.textAlign = "left";
+
+            context.fillText("Rich Internet App Development", 50,75);
+
+            context.textBaseline = "bottom";
+            context.strokeText("Rich Internet App Development",50,150);
+
+            context.strokeStyle = "#000000";
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(40,75);
+            context.moveTo(380,75);
+            context.stroke();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(40,150);
+            context.lineTo(380,150);
+            context.stroke();
+            context.closePath();
+        }
+    </script>
+</html>
