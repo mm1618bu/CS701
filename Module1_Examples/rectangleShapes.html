@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rectangles</title>
+        <meta charset="utf-8">
+        <style></style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+            context.strokeStyle = "#A52A2A";
+            context.lineWidth = 3;
+            context.strokeRect(10,10,100,100);
+
+            context.fillStyle = "#00FF00";
+            context.fillRect(120,10,100,100);
+
+            context.fillStyle = "#0000FF";
+            context.fillRect(230,10,100,100);
+            context.clearRect(260,60,40,45);
+        }  
+    </script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Canvas Sample</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+            context.font = "32px san-serif";
+            context.fillStyle = "red";
+            context.fillText("Welcome to CS701!", 50,150);
+        }
+    </script>
+</html>
