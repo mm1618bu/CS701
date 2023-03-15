@@ -1,0 +1,54 @@
+!<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hand Draw</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="400"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+            context.strokeStyle = "red";
+
+            var newPath = false;
+
+            canvas.onmousedown = function(e) {
+                newPath = true;
+                x = e.clientX - e.target.offsetLeft;
+                y = e.clientY - e.target.offsetTop;
+                context.beginPath();
+                context.moveTo(x,y);
+            }
+
+            canvas.onmousemove = function(e){
+                x = e.clientX - e.target.offsetLeft;
+                y = e.clientY - e.target.offsetTop;
+
+                if(newPath){
+                    context.lineTo(x,y);
+                    context.stroke();
+                }
+            }
+
+            canvas.onmouseup = function(e) {
+                x = e.clientX - e.target.offsetLeft;
+                y = e.clientY - e.target.offsetTop;
+
+                context.closePath();
+
+                newPath = false;
+            }
+        }
+    </script>
+</html>

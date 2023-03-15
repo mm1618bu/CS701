@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shadow</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+            context.shadowColor = "#d3d3d3";
+            context.shadowOffsetX = 5;
+            context.shadowOffsetY = -5;
+
+            context.fillStyle = "blue";
+
+            context.font = "24px serif";
+            context.textAlign = "left";
+
+            context.fillText("Rich Internet App Development", 50, 45);
+
+            context.shadowOffsetX = -15;
+            context.shadowOffsetY = 15;
+            context.shadowBlur = 5;
+            context.fillText("Rich Internet App Development", 50, 85);
+
+            context.fillStyle = "#00FF00";
+            context.fillRect(100,125,100,20);
+        };
+    </script>
+</html>

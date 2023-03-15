@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Linear Gradients</title>
+        <meta charset="utf-8">
+        <style>
+            canvas{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var canvas = document.getElementById("testCanvas");
+            var context = canvas.getContext("2d");
+
+            var gradient = context.createLinearGradient(25,25,350,150);
+            gradient.addColorStop(0, "#FF0000");
+            gradient.addColorStop(0.33,"#00FF00");
+            gradient.addColorStop(0.66,"#FF69B4");
+            gradient.addColorStop(1,"#0000FF");
+
+            context.fillStyle = gradient;
+
+            context.fillRect(25,25,350,150);
+
+            context.clearRect(25,75,350,50);
+            context.font = "24px serif";
+            context.textAlign = "left";
+            context.fillText("Rich Internet App Development", 25, 110);
+
+        };
+    </script>
+</html>
