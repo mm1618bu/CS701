@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Polygon and Polyline - SVG</title>
+        <meta charset="utf-8">
+        <style>
+            body{
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+        <svg width="400" height="300">
+            <polygon points="50,100 150,100 100,50"></polygon>
+            <polygon points="200,100 300,100 250,50" stroke="#000000" stroke-width="4" fill="#FF0000"></polygon>
+            <polygon points="350,100 450,100 400,50" stroke="#000000" stroke-width="4" fill="#FF0000" opacity="0.5"></polygon>
+            <polygon points="50,150 200,200 50, 250 120,200" fill="#708090"></polygon>
+            <polygon points="300,159 309, 150 321,150 330,159 330,171 321,180 309,180,300,171" fill="red" stroke="blue" stroke-width="2"></polygon>
+        </svg>
+        <br>
+        <svg width="400" height="300">
+            <polyline points="50,100 75,100 75,75 100,75 100,50 125,50 125,100" stroke="#0000ff" stroke-width="4" fill="none"></polyline>
+        </svg>
+        <br>
+        <svg width="400" height="300">
+            <polyline points="50,100 75,100 75,75 100,75 100,50 125,50 125,100" stroke="#0000ff" stroke-width="4" fill="black"></polyline>
+        </svg>
+    </body>
+</html>
