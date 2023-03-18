@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <audio controls>
+            <source src="http://playground.html5rocks.com/samples/html5_misc/rushus-modal_blues.mp3" type="audio/mpeg"></source>
+            <source src="http://playground.html5rocks.com/samples/html5_misc/rushus-modal_blues.ogg" type="audio/ogg; codecs-vorbis"></source>
+            Audio element is not supported.
+        </audio>
+        <button id="toggleButton">Play</button>
+        <div id="status"></div>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var song = document.getElementById("myAudio");
+            var toggleButton = document.getElementById("toggleButton");
+            var status = document.getElementById("status");
+
+            toggleButton.onclick = function(e){
+                if(song.paused){
+                    song.play();
+                    toggleButton.innerHTML = "Pause";
+                    status.innerHTML = "Playing" + song.currentSrc;
+                } else{
+                    song.pause();
+                    toggleButton.innerHTML = "Play";
+                    status.innerHTML = "Paused" + song.currentSrc;
+                }
+            }
+        }
+    </script>
+</html>
