@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <style></style>
+    </head>
+    <body>
+        <canvas id="testCanvas" width="400" height="400"></canvas>
+    </body>
+    <script>
+        window.onload = init;
+        var canvas = document.getElementById('testCanvas');
+        var context = canvas.getContext('2d');
+
+        var points = new Array();
+            
+        var trackImage = new Image();
+        trackImage.src = "point.png";
+        
+        var ballPosition;
+
+        var ballRadius = 10;
+        var ballSpeed = 20;
+
+        var dx = 0;
+        var dy = 0;
+
+        var angle = 40; // Assign an initial value to the 'angle' variable
+
+        function init(){
+            var startPoint = {x:2, y:2};
+
+            ballPosition = {
+                x: startPoint.x,
+                y: startPoint.y
+            };
+        }
+
+        function updatePosition(){
+            angle %= 360;
+            var radians = angle * Math.PI / 180;
+            dx = Math.cos(radians) * ballSpeed;
+            dy = Math.sin(radians) * ballSpeed;
+        }
+
+        function drawBallOnCanvas(){
+            context.fillStyle = '#FFFFFF';
+            context.fillRect(0,0,canvas.width, canvas.height);
+
+            context.strokeStyle = '#000000';
+            context.strokeRect(1,1, canvas.width - 2, canvas.height - 2);
+
+            if(points.length == 2000){
+                points.splice(0,points.length);
+            }
+
+
+            var x = 0;
+            var y = 0;
+            ballPosition.x += dx;
+            ballPosition.y += dy;
+            context.fillStyle = "#0000ff";
+            context.beginPath();
+            context.arc(ballPosition.x, ballPosition.y, ballRadius,0,Math.PI*2);
+            context.fill();
+            context.closePath();
+
+            points.push({x: ballPosition.x, y: ballPosition.y});
+
+            if (ballPosition.x + ballRadius > canvas.width) {
+                angle = 180 - angle;
+                updatePosition();
+                ballPosition.x = canvas.width - ballRadius;
+            } else if (ballPosition.x - ballRadius < 0) {
+                angle = 180 - angle;
+                updatePosition();
+                ballPosition.x = ballRadius;
+            }
+
+            if (ballPosition.y + ballRadius > canvas.height) {
+                angle = 360 - angle;
+                updatePosition();
+                ballPosition.y = canvas.height - ballRadius;
+            } else if (ballPosition.y - ballRadius < 0) {
+                angle = 360 - angle;
+                updatePosition();
+                ballPosition.y = ballRadius;
+            }
+            
+            
+            
+        }
+
+        //drawBallOnCanvas();
+        setInterval(drawBallOnCanvas,33);
+    </script>
+</html>
