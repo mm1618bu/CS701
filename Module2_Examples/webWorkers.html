@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Workers</title>
+        <meta charset="utf-8">
+        <script src="echoWorker.js"></script>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2>Web Worker Example</h2>
+        </header>
+        <section>
+            <article>
+                Send: <input type="text" id="msg" value="Hello">
+                <p/>
+                <button id="startButton">Start Worker</button>
+                <button id="sendButton">Send Message</button>
+                <button id="stopButton">Stop Worker</button>
+                <p/>
+                <h3>Received Messages</h3>
+
+                <ul id="items"></ul>
+            </article>
+        </section>
+        <script type="text/javascript">
+            window.onload = init;
+            if(typeof(Worker)!="undefined")
+                document.write("Web Worker Supported.")
+            else
+                document.write("Web Worker Not Supported.")
+
+                var myWorker;
+
+                function init(){
+                    var startButton = document.getElementById("startButton");
+                    startButton.onclick = startWorker;
+                    var sendButton = document.getElementById("sendButton");
+                    sendButton.onclick = sendMessageToWorker;
+                    var stopButton = document.getElementById("stopButton");
+                    stopButton.onclick = stopWorker;
+                }
+
+                function startWorker(e){
+                    if(myWorker == null){
+                        myWorker = new Worker("echoWorker.js");
+                        myWorker.addEventListener("message",handleReceipt, false);
+                    }
+                }
+
+                function handleReceipt(event){
+                    var itemsList = document.getElementById("items");
+                    var item = document.createElement("li");
+                    item.innerHTML = event.data;
+                    items.appendChild(item);
+                }
+
+                function sendMessageToWorker(e){
+                    var data = document.getElementById("msg").value;
+                    if(myWorker != null){
+                        myWorker.postMessage(data);
+                    }
+                }
+
+                function stopWorker(e){
+                    if(myWorker != null){
+                        myWorker.terminate();
+                        myWorker = null;
+                    }
+                }
+        </script>
+    </body>
+</html>
