@@ -1,20 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Data Transfer</title>
         <style>
-            #target, #src >img{
-                border: thin solid black;
-                padding: 2px;
-                margin: 2px;
-            }
 
-            #target{
-                height: 75px;
-                width: 75px;
-                text-align: center;
-                display: table;
-            }
         </style>
     </head>
     <body>
@@ -24,18 +13,16 @@
             <img draggable="true" id="kanabar" src="f1.png" alt="prof"/>
             <img draggable="true" id="sheehan" src="f2.png" alt="prof"/>
         </div>
+        <p/>
         <div id="target">
-            <p>
-                Drop Here
-            </p>
+
         </div>
-        <div id="msg"></div>
+        <p id="msg">Drop over the target</p>
     </body>
     <script>
         window.onload = init;
 
         var src, target, msg;
-        var sourceId;
 
         function init(){
             src = document.getElementById("src");
@@ -52,25 +39,24 @@
         }
 
         function dragStartHandler(e){
-            sourceId = e.target.id;
+            e.dataTransfer.setData("Text", e.target.id);
             e.target.classList.add("dragged");
         }
 
         function dragEndHandler(e){
-            msg.innerHTML = "Drag Ended";
+            msg.innerHTML = "Drop over the target";
             var elems = document.querySelectorAll(".dragged");
-            for(var i=0; i<elems.length;i++){
+            for(var i = 0; i < elems.length; i++){
                 elems[i].classList.remove("dragged");
             }
         }
 
         function dragHandler(e){
             msg.innerHTML = "Dragging" + e.target.id;
-            e.preventDefault();
         }
 
         function dragEnterHandler(e){
-            msg.innerHTML = "Data Entering" + e.target.id;
+            msg.innerHTML = "Drag Entering" + e.target.id;
             e.preventDefault();
         }
 
@@ -80,6 +66,7 @@
         }
 
         function dropHandler(e){
+            var sourceId = e.dataTransfer.getData("Text");
             var sourceElement = document.getElementById(sourceId);
             var newElement = sourceElement.cloneNode(false);
             target.innerHTML = "";
