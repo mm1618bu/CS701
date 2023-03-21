@@ -3,51 +3,116 @@
     <head>
         <title>geolocation Example</title>
         <style></style>
+        <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
     </head>
     <body>
         <header>geolocation</header>
         <section>
             <article>
                 <button id="checkButton">Get Location</button>
+                <button id="startButton">Start</button>
+                <button id="stopButton">Stop</button>
                 <p/>
                 <div id="status">
+                    <p id="counter"></p>
                     <p id="latitude">Latitude:</p>
                     <p id="longitude">Longitude:</p>
                     <p id="accuracy">accuracy:</p>
                     <p id="timestamp">timestamp:</p>
                 </div>
+                <p></p>
+                <div id="map"></div>
             </article>
         </section>
     </body>
     <script>
 
         window.onload = init;
-
-        if(navigator.geolocation){
-            document.write("Available")
-        } else{
-            document.write("Not")
-        };
-
+        
+        var watchId = null;
+        var counter = 0;
+        
         function init(){
             var checkButton = document.getElementById("checkButton");
+            var startButton = document.getElementById("startButton");
+            var stopButton = document.getElementById("stopButton");
+        
             checkButton.onclick = getLocation;
+            startButton.onclick = startTrackingLocation;
+            stopButton.onclick = stopTrackingLocation;
+        
+            if(navigator.geolocation){
+                console.log("Geolocation is available.");
+            } else{
+                console.log("Geolocation is not available.");
+            };
         }
-
+        
         function getLocation(){
-            navigator.geolocation.getCurrentPosition(displayLocation);
+            navigator.geolocation.getCurrentPosition(displayLocation, handleError);
         }
-
+        
         function displayLocation(position){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var accuracy = position.coords.accuracy;
             var timestamp = position.timestamp;
-
-            document.getElementById("latitude").innerHTML = "Latitude" + latitude;
-            document.getElementById("longitude").innerHTML = "Longitude" + longitude;
-            document.getElementById("accuracy").innerHTML = "accuracy" + accuracy + "meters";
+        
+            counter++;
+        
+            document.getElementById("counter").innerHTML = "Update#: " + counter;
+            document.getElementById("latitude").innerHTML = "Latitude: " + latitude;
+            document.getElementById("longitude").innerHTML = "Longitude: " + longitude;
+            document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + " meters";
             document.getElementById("timestamp").innerHTML = "Timestamp: " + timestamp;
+
+            showOnMap(position.coords);
         }
-    </script>
+        
+        function startTrackingLocation(){
+            var options = {
+                enableHighAccuracy : true,
+                timeout: 5000,
+                maximumAge: 0
+            };
+        
+            watchId = navigator.geolocation.watchPosition(displayLocation,handleError,options);
+        }
+        
+        function stopTrackingLocation(){
+            if(watchId){
+                navigator.geolocation.clearWatch(watchId);
+            }
+        }
+
+        function showOnMap(pos) {
+            var googlePosition = new google.maps.LatLng(pos.latitude, pos.longitude);
+            var mapOptions = { 
+                zoom: 15, 
+                center: googlePosition, 
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var mapObj = document.getElementById("map");
+            var googleMap = new google.maps.Map(mapObj, mapOptions);
+            var markerOpt = { position: googlePosition, map: googleMap };
+            var googleMarker = new google.maps.Marker(markerOpt);
+        }
+
+        
+        function handleError(error){
+            switch(error.code){
+                case 1:
+                    document.getElementById("status").innerHTML = "<strong>Error</strong>: The user denied permission";
+                    break;
+                case 2:
+                    document.getElementById("status").innerHTML = "<strong>Error</strong>: position unavailable";
+                    break;
+                case 3:
+                    document.getElementById("status").innerHTML = "<strong>Error</strong>: timed out";
+                    break;
+            }
+        }
+        
+        </script>
+        
 </html>
