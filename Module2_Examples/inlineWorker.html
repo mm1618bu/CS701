@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Worker Sample</title>
+        <meta charset="utf-8">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2>Inline web worker example</h2>
+        </header>
+        <script id="worker1" type="javascript/worker">
+            var counter = 1;
+            self.onmessage = function(e){
+                self.postMessage("Worker Echos" + e.data + " too# " + counter);
+                counter++;
+            }
+        </script>
+        <section>
+            <article>
+                Send: <input type="text" id="msg" value="Hello">
+                <p/>
+                <button id="startButton">Start Worker</button>
+                <button id="sendButton">Send Message</button>
+                <button id="stopButton">Stop Worker</button>
+                <p/>
+                <h3>Received Messages</h3>
+
+                <ul id="items"></ul>
+            </article>
+        </section>
+    </body>
+    <script>
+        window.onload = init();
+
+        var myWorker;
+
+        function init(){
+            var startButton = document.getElementById("startButton");
+            startButton.onclick = startWorker;
+            var sendButton = document.getElementById("sendButton");
+            sendButton.onclick = sendMessageToWorker;
+            var stopButton = document.getElementById("stopButton");
+            stopButton.onclick = stopWorker;
+        }
+
+        function startWorker(e){
+            if(myWorker == null){
+                var content = document.querySelector('#worker1').textContent;
+                var bb = new Blob([content]);
+
+                var objUrl = (window.webkitURL || window.URL);
+                var blobUrl = objUrl.createObjectURL(bb);
+                console.log(blobUrl);
+
+                myWorker = new Worker(blobUrl);
+                myWorker.addEventListener("message", handleReceipt, false);
+            }
+        }
+
+        function handleReceipt(event){
+            var itemsList = document.getElementById("items");
+            var item = document.createElement("li");
+            item.innerHTML = event.data;
+            items.appendChild(item);
+        }
+
+        function sendMessageToWorker(e){
+            var data = document.getElementById("msg").value;
+            if(myWorker != null){
+                myWorker.postMessage(data);
+            }
+        }
+
+        function stopWorker(e){
+            if(myWorker != null){
+                myWorker.terminate();
+                myWorker = null;
+            }
+        }
+    </script>
+</html>
