@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add and remove items</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <header>
+            <h2>Session Storage Example</h2>
+        </header>
+        <section>
+            <article>
+                Key:    <input type="text" id="key">
+                Value:  <input type="text" id="value">
+                <p/>
+                <button id="addButton">Add item</button>
+                <button id="remButton">Remove item</button>
+                <button id="clrButton">Clear</button>
+                <p/>
+                <h3>Session Storage Entries</h3>
+                <ul id="items"></ul>
+            </article>
+        </section>
+    </body>
+    <script type="text/javascript">
+        if(window.sessionStorage)
+            document.writeln("sessionStorage support is available.")
+        else
+            document.writeln("Not available.")
+        if(window.localStorage)
+            document.writeln("local store support is available.")
+        else
+            document.writeln("Not Available.")
+
+        window.onload = init;
+
+        function init(){
+            var addButton = document.getElementById("addButton");
+            addButton.onclick = addItem;
+            var remButton = document.getElementById("remButton");
+            remButton.onclick = removeItem;
+            var clrButton = document.getElementById("clrButton");
+            clrButton.onclick = clearItems;
+
+            updateDOMItems();
+        }
+
+        function addItem(e){
+            var key = document.getElementById("key").value;
+            var value = document.getElementById("value").value;
+
+            window.sessionStorage.setItem(key, value);
+
+            updateDOMItems();
+        }
+
+        function removeItem(e){
+            var key = document.getElementById("key").value;
+            window.sessionStorage2.removeItem(key);
+
+            updateDOMItems();
+        }
+
+        function clearItems(){
+            window.sessionStorage.clear();
+
+            updateDOMItems();
+        }
+
+        function updateDOMItems(){
+            var itemsList = document.getElementById("items");
+            itemsList.innerHTML = '';
+            for(key in window.sessionStorage){
+                addItemToDOM(key, sessionStorage[key]);
+            }
+        }
+
+        function addItemToDOM(key,value){
+            var items = document.getElementById("items");
+            var item = document.createElement("li");
+            item.innerHTML = key + ": " + value;
+
+            items.appendChild(item);
+        }
+    </script>
+</html>
