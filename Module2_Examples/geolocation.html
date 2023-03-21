@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>geolocation Example</title>
+        <style></style>
+    </head>
+    <body>
+        <header>geolocation</header>
+        <section>
+            <article>
+                <button id="checkButton">Get Location</button>
+                <p/>
+                <div id="status">
+                    <p id="latitude">Latitude:</p>
+                    <p id="longitude">Longitude:</p>
+                    <p id="accuracy">accuracy:</p>
+                    <p id="timestamp">timestamp:</p>
+                </div>
+            </article>
+        </section>
+    </body>
+    <script>
+
+        window.onload = init;
+
+        if(navigator.geolocation){
+            document.write("Available")
+        } else{
+            document.write("Not")
+        };
+
+        function init(){
+            var checkButton = document.getElementById("checkButton");
+            checkButton.onclick = getLocation;
+        }
+
+        function getLocation(){
+            navigator.geolocation.getCurrentPosition(displayLocation);
+        }
+
+        function displayLocation(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
+            var timestamp = position.timestamp;
+
+            document.getElementById("latitude").innerHTML = "Latitude" + latitude;
+            document.getElementById("longitude").innerHTML = "Longitude" + longitude;
+            document.getElementById("accuracy").innerHTML = "accuracy" + accuracy + "meters";
+            document.getElementById("timestamp").innerHTML = "Timestamp: " + timestamp;
+        }
+    </script>
+</html>
