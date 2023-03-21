@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Filtering</title>
+        <style>
+            img{
+                height: 400px;
+                width: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="src">
+            <img draggable="true" id="ltc" src="f1.png" alt="prof"/>
+            <img draggable="true" id="temkin" src="f2.png" alt="prof"/>
+            <img draggable="true" id="kanabar" src="f1.png" alt="prof"/>
+            <img draggable="true" id="sheehan" src="f2.png" alt="prof"/>
+        </div>
+        <p/>
+        <div id="target">
+
+        </div>
+        <p id="msg">Drop over the target</p>
+    </body>
+    <script>
+        window.onload = init;
+        var src, target, msg;
+        var sourceId;
+
+        function init(){
+            src = document.getElementById("src");
+            target = document.getElementById("target");
+            msg = document.getElementById("msg");
+
+            src.ondragstart = dragStartHandler;
+            src.ondragend = dragEndHandler;
+            src.ondrag = dragHandler;
+
+            target.ondragenter = dragEnterHandler;
+            target.ondragover = dragOverHandler;
+            target.ondrop = dropHandler;
+        }
+
+        function dragStartHandler(e){
+            e.dataTransfer.setData("Text", e.target.id);
+            sourceId = e.target.id;
+            e.target.classList.add("dragged");
+        }
+
+        function dragEndHandler(e){
+            msg.innerHTML = "Drag Ended";
+            var elems = document.querySelectorAll(".dragged");
+            for(var i=0; i<elems.length;i++){
+                elems[i].classList.remove("dragged");
+            }
+        }
+
+        function dragHandler(e){
+            msg.innerHTML = "Dragging " + e.target.id;
+        }
+
+        function dragEnterHandler(e){
+            console.log("Drag Entering" + e.target.id + "source is" + e.dataTransfer.getData("Text"));
+
+            var id = e.dataTransfer.getData("text") || sourceId;
+            if (id=="kalathur"){
+                e.preventDefault();
+            }
+        }
+
+        function dragOverHandler(e){
+            console.log("Drag over" + e.target.id + "source is "+ e.dataTransfer.getData("Text"));
+
+            var id = e.dataTransfer.getData("text") || sourceId;
+            if(id == "kalathur"){
+                e.preventDefault();
+            }
+        }
+
+        function dropHandler(e){
+            console.log("Drop on" + e.target.id + "source is " + e.dataTransfer.getData("Text"));
+
+            var id = e.dataTransfer.getData("text") || sourceId;
+            var sourceElement = document.getElementById(id);
+            var newElement = sourceElement.cloneNode(false);
+            target.innerHTML = "";
+            target.appendChild(newElement);
+            e.preventDefault();
+        }
+
+    </script>
+</html>
