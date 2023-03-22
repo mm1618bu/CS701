@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=IS0-8859-1">
+        <title>Index DB</title>
+        <meta charset="utf-8">
+        <style></style>
+    </head>
+    <body>
+        <div class="container">
+            <p>
+                <div class="row">
+                    <button onclick="createDb()" class="btn">Create Database</button>
+                    <button onclick="populateDb()" class="btn">Populate Database</button>
+                    <button onclick="openDb()" class="btn">Open Database</button>
+                    <button onclick="displayDb()" class="btn">Display Courses</button>
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <button onclick="fetchCourse('cs701')" class="btn">Fetch CS701</button>
+                    <button onclick="updateCourse('cs701')" class="btn">Update CS701</button>
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <button onclick="displayCoreCourses()" class="btn">Display Core Courses</button>
+                    <button onclick="displayCourses1()" class="btn">Display 600+ courses</button>
+                    <button onclick="displayCourses2()" class="btn">Display 600- courses</button>
+                    <button onclick="displayCourses3()" class="btn">Display 600 courses</button>
+                </div>
+            </p>
+            <p>
+                <div class="row">
+                    <button onclick="clearAllCourses()" class="btn">Clear Courses</button>
+                    <button onclick="deleteDb()" class="btn">Delete Database</button>
+                </div>
+            </p>
+            <div id="result"></div>
+        </div>
+    </body>
+    <script>
+        const DB_NAME = 'cs701db';
+        const DB_VERSION = 1;
+        const DB_STORE_NAME = 'courses';
+
+        var db;
+        var courses;
+        function createDb(){
+            console.log("createDb...");
+
+            var request = window.indexedDB.open(DB_NAME, DB_VERSION);
+
+            request.onsuccess = function (evt){
+                db = request.result;
+                console.log("createDb DONE");
+                logMessage("createDb DONE");
+            };
+
+            request.onerror = function (evt){
+                console.log("createDb ERROR: ", evt.target.errorCode);
+                logMessage("createDb ERROR: ",evt.target.errorCode);
+            };
+
+            request.onupgradeneeded = function (evt){
+                console.log("createDb.onupgradeneeded ...");
+
+                var store = evt.currentTarget.result.createObjectStore(DB_STORE_NAME, { keyPath: 'id'});
+
+                store.createIndex('idIndex','id', {unique: true});
+                store.createIndex('nameIndex','name', {unique: false});
+                store.createIndex('typeIndex','type',{unique: false});
+                store.createIndex('contactIndex','contact',{unique:false});
+            };
+
+            courses = [
+                {"id":"cs520","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs521","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs526","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs530","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs542","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs544","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs546","type":"core","contact":"temkin","name":"myCourse"},
+                {"id":"cs550","type":"core","contact":"temkin","name":"myCourse"},
+            ];
+        }
+
+        function populateDb(){
+
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            if(!db)
+                return;
+
+            var transaction = db.transaction(DB_STORE_NAME, "readwrite");
+            var store = transaction.objectStore(DB_STORE_NAME);
+
+            courses.forEach(function (course){
+
+                var request = store.add({
+                    "id":   course.id,
+                    "type": course.type,
+                    "contact":  course.contact,
+                    "name": course.name
+                });
+
+                request.onsuccess = function(e){
+                    console.log("Added", course.id);
+                    result.innerHTML = result.innerHTML + "<br/>" + "Added" + course.id;
+                };
+
+                request.onerror = function(e){
+                    console.log("Error", e.target.error.message);
+                    result.innerHTML = result.innerHTML + "<br/>" + "Error" + e.target.error.message
+                };
+    
+            })
+        }
+
+        function openDb(){
+            console.log("openDb ...");
+            var openRequest = window.indexedDB.open(DB_NAME);
+
+            openRequest.onerror = function(e){
+                console.log("Database Error: " + e.target.errorCode);
+            };
+
+            openRequest.onsuccess = function(event){
+                db = openRequest.result;
+            };
+        }
+
+        function displayDb(){
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            if(db){
+                try{
+                    var store = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+                    var request = store.openCursor();
+                    
+                    request.onsuccess = function(evt){
+                        var cursor = evt.target.result;
+                        if (cursor){
+                            var course = cursor.value;
+                            var jsonStr = JSON.stringify(course);
+                            result.innerHTML = result.innerHTML + "<br/>" + jsonStr;
+                            cursor.continue();
+                        }
+                    };
+
+                    request.onerror = function(evt){
+                        console.error("displayDB ERROR: ", evt.target.errorCode);
+                    };
+                } catch(e){
+                    console.log(e);
+                    logMessage(e);
+                }
+            }
+        }
+
+        function fetchCourse(courseId){
+            try{
+                var result = document.getElementById("result");
+                result.innerHTML = "";
+
+                if(db){
+                    var store = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+                    store.get(courseId).onsuccess = function(event) {
+                        var course = event.target.result;
+                        if(course == null){
+                            result.innerHTML = "course not found";
+                        }
+                        else{
+                            var jsonStr = JSON.stringify(course);
+                            result.innerHTML = jsonStr;
+                        }
+                        
+                    };
+                }
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+
+        function updateCourse(courseId){
+            try{
+                var result = document.getElementById("result");
+                result.innerHTML = "";
+
+                var jsonStr;
+                var course;
+
+                if(db){
+
+                    var transaction = db.transaction(DB_STORE_NAME, "readwrite");
+                    var store = transaction.objectStore(DB_STORE_NAME);
+
+                    store.get(courseId).onsuccess = function(event){
+                        course = event.target.result;
+                    }
+                }
+            }
+        }
+    </script>
+</html>
