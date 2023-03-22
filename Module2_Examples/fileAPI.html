@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Selecting Files</title>
+    </head>
+    <body>
+        <input type="file" id="myfiles" name="myfiles[]" multiple />
+        <output id="list"></output>
+    </body>
+    <script>
+        window.onload = init;
+
+        function init(){
+            var elem = document.getElementById('myfiles');
+            elem.addEventListener('change',handleFileSelections, false);
+        }
+
+        function handleFileSelections(evt){
+            var files = evt.target.files;
+            var output = '';
+
+            for(var i=0; i<files.length; i++){
+                var f = files.item(i);
+                output += '<li><em>' + f.name + '</em>';
+                output += ', Type: ' + f.type;
+                output +=', Size: ' + f.size +' bytes';
+                output +=', Modified: ' + f.lastModifiedDate.toLocaleString() + '</li>';
+            }
+
+            document.getElementById('list').innerHTML = '<ul>' + output + '</ul>';
+        }
+    </script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Drag and Drop</title>
+    </head>
+    <body>
+        <div class="sample">
+            <div id="target">
+                Drop files here
+            </div>
+            <output id="list"></output>
+        </div>
+    </body>
+    <script>
+        window.onload = init;
+
+       function init(){
+        var target = document.getElementById('target');
+        target.addEventListener('dragover',handleDragOver, false);
+        target.addEventListener('drop',handleFileSelections, false);
+       }
+
+       function handleDragOver(evt){
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy';
+       }
+
+       function handleFileSelections(evt){
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        var files = evt.dataTransfer.files;
+
+        var output = '';
+
+        for(var i=0; i<files.length; i++){
+            var f = files.item(i);
+            output += '<li><em>' + f.name + '</em>';
+            output += ', Type: ' + f.type;
+            output += ', Size: ' + f.size + 'bytes';
+            output += ', Modified: ' + f.lastModifiedDate.toLocaleString() + '</li>';
+        }
+
+        document.getElementById('list').innerHTML = '<ul>' + output + '</ul>';
+       }
+    </script>
+</html>
