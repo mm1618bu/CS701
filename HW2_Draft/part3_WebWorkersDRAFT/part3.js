@@ -1,63 +1,76 @@
 (function() {
 
     window.onload = init;
-
+  
     var startButton;
-    
-
+    var workers = [];
+  
     function init() {
-    	startButton = document.getElementById("startButton");
-    	startButton.onclick = sendDataToWorkers;
+      startButton = document.getElementById("startButton");
+      startButton.onclick = sendDataToWorkers;
     }
+  
+// Define the results array
+var results = [];
 
-    // Complete the following code
+// Handle messages received from the Web Worker
+function handleReceipt(event) {
+  var itemsList = document.getElementById("items");
+  var item = document.createElement("li");
+  item.innerHTML = `Start: ${event.data.start}, End: ${event.data.end}, Result: ${event.data.result}`;
+  itemsList.appendChild(item);
+  
+  // Add the result to the results array
+  results.push(event.data);
 
-    // Handle messages received from the Web Worker
-    function handleReceipt(event) {
+  if (results.length === 5) {
+    // All results have been received, calculate the accumulated result
+    var accumulatedResult = results.reduce((acc, curr) => acc + curr.result, 0);
 
-    
+    // Store the accumulated result in local storage
+    var storedResults = JSON.parse(localStorage.getItem("results")) || [];
+    storedResults.push({ time: new Date(), result: accumulatedResult });
+    localStorage.setItem("results", JSON.stringify(storedResults));
+
+    // Update the UI with the accumulated result
+    var resultDisplay = document.getElementById("storageItems");
+    resultDisplay.innerHTML = accumulatedResult;
+
+    // Reset the results array
+    results = [];
+  }
+}
+
+
+    // Create and start Web Workers
+    function sendDataToWorkers() {
+      startButton.disabled = true;
+      var intervals = [[1, 100], [101, 200], [201, 300], [301, 400], [401, 500]];
+      for(let i=0; i<5; i++) {
+        const worker = new Worker('computeWorker.js');
+        worker.onmessage = handleReceipt;
+        workers.push(worker);
+      }
+      for(let i=0; i<5; i++) {
+        const interval = intervals[i];
+        workers[i].postMessage({start: interval[0], end: interval[1]});
+      }
     }
-
-    // Complete the following code
-
-    // send messages to the Web Workers
-    function sendDataToWorkers(e) {
-        startButton.disabled = true;
-
-        
-
+  
+    // Stop all Web Workers
+    function stopWorkers() {
+      startButton.disabled = false;
+      for(let i=0; i<5; i++) {
+        workers[i].terminate();
+      }
+      workers = [];
     }
-
-    // Feel free to add any helper methods
-
-
-    
-
-    
-
-})();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+    // Helper method to clear the UI
+    function clearUI() {
+      var itemsList = document.getElementById("items");
+      itemsList.innerHTML = "";
+    }
+  
+  })();
+  
