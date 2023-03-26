@@ -9,11 +9,10 @@
     target = document.getElementById("dropLists");
     msg = document.getElementById("msg");
 
-    src.ondragstart = dragStartHandler;
-    src.ondragend = dragEndHandler;
-    src.ondrag = dragHandler;
-    src.onEnterDem = dragEnterDemocratsHandler;
-    src.ondropDem = dropDemocratsHandler;
+    // Add drag and drop event listeners
+    src.addEventListener('dragstart', dragStartHandler);
+    target.addEventListener('dragover', dragOverHandler);
+    target.addEventListener('drop', dropHandler);
 
     // Read data from partyList.xml
     var xmlhttp = new XMLHttpRequest();
@@ -30,57 +29,33 @@
         localStorage.setItem("partyList", JSON.stringify(json));
 
         // Display JSON in console
-      // console.log(json.senators.senator);
-      var json2 = json.senators.senator;
-      json2.forEach(item=> {
-           console.log(item.name["#text"]);
-           src.innerHTML += `<li> ${item.name["#text"]} </li>`
-      })
-      
+        // console.log(json.senators.senator);
+        var json2 = json.senators.senator;
+        json2.forEach(item=> {
+             console.log(item.name["#text"]);
+             src.innerHTML += `<li draggable="true"> ${item.name["#text"]} </li>`
+        })
+        
       }
     };
     xmlhttp.open("GET", "partyList.xml", true);
 
     xmlhttp.send();
   }
-function convertToJson(xml) {
-  var senators = [];
-  var xmlDoc = xml.responseXML;
-  var senatorList = xmlDoc.getElementsByTagName("senator");
-  for (var i = 0; i < senatorList.length; i++) {
-    var senator = {};
-    senator.name = senatorList[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
-    senator.party = senatorList[i].getElementsByTagName("party")[0].childNodes[0].nodeValue;
-    senators.push(senator);
-    console.log(senator.name);
-  }
-  return JSON.stringify(senators);
-}
 
   function dragStartHandler(e) {
-    e.target.classList.add("members");
+    e.dataTransfer.setData("text", e.target.innerHTML);
   }
 
-  function dragEndHandler(e) {
-    e.target.classList.remove("dropLists");
-    msg.innerHTML = "Drop Here";
-  }
-
-  function dragHandler(e) {
-    msg.innerHTML = "Dragging " + e.target.innerHTML;
-    msg.innerHTML = "Dragging " + e.target.id;
-  }
-
-  function dragEnterDemocratsHandler(e) {
-    msg.innerHTML = "Drag Entering" + e.target.id;
+  function dragOverHandler(e) {
     e.preventDefault();
   }
 
-  function dropDemocratsHandler(e) {}
-
-  function dragEnterRepublicansHandler(e) {}
-
-  function dropRepublicansHandler(e) {}
+  function dropHandler(e) {
+    e.preventDefault();
+    var data = e.dataTransfer.getData("text");
+    e.target.innerHTML += "<li>" + data + "</li>";
+  }
 
   function xmlToJson(xml) {
     // Create the return object
