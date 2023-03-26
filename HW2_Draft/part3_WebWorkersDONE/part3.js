@@ -8,6 +8,22 @@
     function init() {
       startButton = document.getElementById("startButton");
       startButton.onclick = sendDataToWorkers;
+    
+      // Retrieve the stored results from local storage
+      var storedResults = JSON.parse(localStorage.getItem("results")) || [];
+    
+      // Get a reference to the StorageItems div
+      var storageItemsDiv = document.getElementById("storageItems");
+    
+      // Clear the previous contents of the div
+      storageItemsDiv.innerHTML = "";
+    
+      // Iterate over the stored results and add them to the div
+      storedResults.forEach(result => {
+        var resultItem = document.createElement("div");
+        resultItem.innerHTML = `Time: ${result.time}, Result: ${result.result}`;
+        storageItemsDiv.appendChild(resultItem);
+      });
     }
   
 // Define the results array
@@ -26,6 +42,8 @@ function handleReceipt(event) {
   if (results.length === 5) {
     // All results have been received, calculate the accumulated result
     var accumulatedResult = results.reduce((acc, curr) => acc + curr.result, 0);
+    console.log(accumulatedResult);
+    console.log(results);
 
     // Store the accumulated result in local storage
     var storedResults = JSON.parse(localStorage.getItem("results")) || [];
@@ -33,9 +51,8 @@ function handleReceipt(event) {
     localStorage.setItem("results", JSON.stringify(storedResults));
 
     // Update the UI with the accumulated result
-    var resultDisplay = document.getElementById("storageItems");
+    var resultDisplay = document.getElementById("sum");
     resultDisplay.innerHTML = accumulatedResult;
-
     // Reset the results array
     results = [];
   }
