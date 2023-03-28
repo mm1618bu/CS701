@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="js/angular.js"></script>
+    <script>
+      var courseList = 
+        [{name:'Information Structures',  id:'cs520', type:'core'},
+         {name:'Web App Development',     id:'cs601', type:'core'},
+         {name:'IT Project Management',   id:'cs632', type:'elective'},
+         {name:'Rich Internet App Dev',   id:'cs701', type:'elective'},
+         {name:'Enterprise Architecture', id:'cs783', type:'elective'}];
+
+      function CourseListController($scope) {
+        $scope.courses = courseList;
+        $scope.getDisplayName = function(course) {
+            return course.id + ' - ' + course.name;
+        };
+        $scope.myChoice = $scope.courses[3];
+      }
+    </script>
+  </head>
+  <body ng-controller='CourseListController'>
+
+		<div>
+			<label>Select a course with id for label</label>
+			<select ng-model="myChoice" 
+			   ng-options="course.id for course in courses"></select>
+			<br/>
+			Selected Course: {{ myChoice }}
+			<p></p>
+			
+			<label>Select a course with a computed label</label>
+			<select ng-model="myChoice" 
+			   ng-options="getDisplayName(course) 
+			       for course in courses"></select>
+			<br/>
+			Selected Course: {{ myChoice }}
+			<p></p>
+			
+			<label>Select a course grouped by type</label>
+			<select ng-model="myChoice" 
+			   ng-options="getDisplayName(course) 
+			       group by course.type for course in courses"></select>
+			<br/>
+			Selected Course: {{ myChoice }}
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
