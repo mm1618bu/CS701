@@ -1,0 +1,17 @@
+<html ng-app>
+    <head>
+        <script src="js/angular.js"></script>
+        <script>
+            function HelloController($scope){
+                $scope.greeting = {text:'Hello',course:'cs701'};
+            }
+        </script>
+    </head>
+    <body>
+        <div ng-controller='HelloController'>
+            <input ng-model='greeting.text'>
+            <input ng-model='greeting.course'>
+            <p>{{greeting.text}}, Welcome to {{greeting.couse}}!</p>
+        </div>
+    </body>
+</html>
