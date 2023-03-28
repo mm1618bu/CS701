@@ -1,0 +1,37 @@
+
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="js/angular.js"></script>
+    <script>
+      var courseList = 
+            [{name:'Information Structures',  id:'cs520'},
+             {name:'Web App Development',     id:'cs601'},
+             {name:'IT Project Management',   id:'cs632'},
+             {name:'Rich Internet App Dev',   id:'cs701'},
+             {name:'Enterprise Architecture', id:'cs783'}];
+
+      function CourseListController($scope) {
+        $scope.courses = courseList;
+        $scope.getDisplayName = function(course) {
+            return course.id + ' - ' + course.name;
+        };
+        $scope.myChoice = 'cs701';
+      }
+    </script>
+  </head>
+  <body ng-controller='CourseListController'>
+    <div>
+      <label>Select:</label>
+       <select ng-model="myChoice">
+          <option ng-repeat="course in courses" 
+              value="{{course.id}}" 
+              ng-selected="course.id == myChoice">
+            {{getDisplayName(course)}}
+          </option>
+       </select>
+       <p></p>
+      <div>Selected Course = {{myChoice}}</div>
+    </div>
+  </body>
+</html>
