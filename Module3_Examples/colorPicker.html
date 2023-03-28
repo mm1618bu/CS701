@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app>
+  <head>
+     <title>Color Sample Version1</title>
+ 
+    <script src='js/angular.js'></script>
+  
+    <script>
+			function ColorController($scope) {
+				$scope.setColor = function() {
+					var colors = document.getElementsByTagName('input');
+					document.getElementById('target').style.color = 
+					   'rgb(' + colors[0].value + ',' + 
+					     colors[1].value + ',' + colors[2].value + ')';
+				}
+			}
+		</script>
+ 
+  </head>
+ 
+  <body ng-controller='ColorController'>
+    <h1 id="target">
+      Drag sliders to change color
+    </h1>
+    <input type='range' min='0' max='255' 
+          ng-model='r' ng-change='setColor();'> Red<br/>
+    <input type='range' min='0' max='255'
+          ng-model='g' ng-change='setColor();'> Green<br/>
+    <input type='range' min='0' max='255'
+          ng-model='b' ng-change='setColor();'> Blue<br/>
+    <p></p>
+    Current Color: rgb({{r}},{{g}},{{b}})
+  </body>
+</html>
+
