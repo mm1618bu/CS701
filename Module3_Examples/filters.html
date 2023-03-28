@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <script src="js/angular.js"></script>
+        <script>
+            function TestController($scope){
+                var jsonData = {name: 'RIA', id: 'cs701'};
+                $scope.jsonSample = jsonData;
+                $scope.tuition = 3200;
+                $scope.today = new Date();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div ng-controller="TestController">
+            <span ng-non-bindable>{{today | date}}</span>: {{today | date}}<br>
+            <span ng-non-bindable>{{today | date:'medium'}}</span>: {{today | date:'medium'}}<br>
+            <span ng-non-bindable>{{today | date:'fullDate'}}</span>: {{today |date:'fullDate'}}<br>
+            <span ng-non-bindable>{{tuition | currency}}</span>: {{tuition | currency}}<br>
+            <span ng-non-bindable>{{tuition | currency: 'USD$'}}</span>: {{tuition | currency:'USD$'}}<br>
+            <span ng-non-bindable>{{jsonSample | json}}</span>: {{jsonSample | json}}<br>
+            <p></p>
+        </div>
+    </body>
+</html>
