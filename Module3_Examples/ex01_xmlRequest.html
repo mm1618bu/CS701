@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>Playlist</title>
+        <script src="js/angular.js"></script>
+        <script src="js/xml2json.js"></script>
+        <script src="ex01_script.js"></script>
+        <link rel="stylesheet" href="css/ex01.css">
+    </head>
+    <body ng-controller="PlaylistController">
+        <h1>Play List</h1>
+        <table>
+            <thead>
+                <tr><th>Title</th><th>Artist</th></tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                    <td>
+                        <a href='{{item.location}}' target=_song>{{item.title}}
+                        </a>
+                    </td>
+                    <td>{{item.artist}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
