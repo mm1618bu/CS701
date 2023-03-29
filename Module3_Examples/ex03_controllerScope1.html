@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+    <head>
+        <script src="js/angular.js"></script>
+        <script src="js/ex03_controllerScope1.js"></script>
+    </head>
+    <body>
+        <div ng-controller="ParentController">
+            <div>
+                Course Details (Parent Scope): <br>
+                    {{courseID}} - {{courseName}} - {{tuition | currency}}.
+            </div>
+            <p></p>
+            <div ng-controller="ChildController">
+                Course Details(Child Scope):<br>
+                    {{courseID}} - {{courseName}} - {{tuition | currency}}.
+            </div>
+        </div>
+    </body>
+</html>
