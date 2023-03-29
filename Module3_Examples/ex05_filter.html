@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <script src="js/angular.js"></script>
+        <script src="js/ex05_controller.js"></script>
+        <script src="js/ex05_filter.js"></script>
+    </head>
+    <body>
+        <div ng-controller='HelloController'>
+            <input ng-model='greeting'>
+            <p>{{greeting | underscore}}, Welcome to CS701!</p>
+            <p>{{greeting | underscore:collapse}}, Welcome to CS701!</p>
+            <input type="checkbox" ng-model='collapse'>collapse
+        </div>
+    </body>
+</html>
