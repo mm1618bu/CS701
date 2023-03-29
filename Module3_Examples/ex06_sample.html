@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <title>AngularJS Service Example6</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="js/angular.js"></script>
+        <script src="ex06_app.js"></script>
+    </head>
+    <body>
+        <div ng-controller="SampleController" class="container">
+            <div class="panel">
+                <h4 class="panel-heading">$interval service</h4>
+                <div class="panel-body">
+                    Current Local Date/Time <br/>
+                    {{time | Date:'medium'}}
+                </div>
+                <div class="btn-group">
+                    <button ng-click="start()" class="btn btn-success">Start</button>
+                    <button ng-click="stop()" class="btn btn-danger">Stop</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
