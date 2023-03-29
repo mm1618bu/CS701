@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <title>Photo Stream</title>
+    <script src="js/angular.js"></script>
+    <script src="ex03_script.js"></script>
+    <link rel="stylesheet" href="css/ex02.css">
+</head>
+    <body>
+    <h1>Flickr</h1>
+    <div ng-controller="FlickrController" ng-init=getData()>
+         <form >
+             <input type="text" ng-model="searchTerm" 
+                class="rounded">
+             <button class="rounded" ng-click="getData()">
+                 <i>Search</i></button>
+        </form>
+        <p></p>
+        <div>
+             <a ng-repeat="item in items" 
+                href='{{item.link}}' target=_x>
+                  <img ng-src='{{item.media.m}}' 
+                    width='200' height='200'/>
+             </a>
+        </div>
+    </div>
+  </body>
+</html>
