@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <title>AngularJS Service Example1</title>
+        <link href="css/bootstrop.css" rel="stylesheet">
+        <script src="js/angular.js"></script>
+        <script src="ex01_service.js"></script>
+        <script src="ex01_app.js"></script>
+    </head>
+    <body>
+        <div ng-controller="SampleController" class="container">
+            <ul class="list-unstyled">
+                <li ng-repeat='quote in quotes' ng-click="doLog($index)" ng-dblclick="doAlert($index)">
+                    {{quote}}
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
