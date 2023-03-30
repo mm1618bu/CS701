@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <title>Alert Directive</title>
+        <link href="css/bootstrap-combined.min.css" rel="stylesheet">
+        <script src="js/angular.js"></script>
+        <script src="ex07_directive.js"></script>
+        <script src="ex07_app.js"></script>
+    </head>
+    <body>
+        <div ng-controller="AlertController" class="well">
+            <alert ng-repeat="alert in alerts" type="alert.type" remove="closeAlert($index)">{{alert.msg}}</alert>
+            <input type="text" ng-model="alertText" size="30" placeholder="add alert text here">
+            <div class='checkbox'>
+                <label>Error
+                    <input type="checkbox" ng-model="alertType" ng-true-value='error' ng-false-value='success'>
+                </label>
+            </div>
+            <button class='btn' ng-click="addAlert()">Add Alert</button>
+        </div>
+    </body>
+
+</html>
