@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="ex01_scriptA.js"></script>
+    </head>
+    <body ng-controller="homeController">
+        <header>
+            <nav class="navbar">
+                <div class="container">
+                    <ul class="nav">
+                        <li><a href="#/">A</a></li>
+                        <li><a href="#/about">B</a></li>
+                        <li><a href="#/contact">C</a></li>
+                        <li><a href="#/foo">D</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div id="main">
+            <div ng-view>
+
+            </div>
+        </div>
+    </body>
+</html>
