@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app='Twitter'>
+    <head>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/myfilters.js"></script>
+        <script src="ex04_script.js"></script>
+        <link rel="stylesheet" href="css/ex04.css">
+    </head>
+    <body>
+        <b>Twitter Results</b>
+        <div ng-controller="TwitterController">
+            <form>
+                <input type="text" ng-model="searchTerm" class='rounded'>
+                <button class="btn" ng-click="doSearch()"><i>Search</i></button>
+            </form>
+            <table>
+                <tr ng-repeat="tweet in TwitterResults.results">
+                    <td><a href='{{tweet.text | extractLink}}' target=_blank>{{tweet.text}}</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
