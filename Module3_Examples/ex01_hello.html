@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang='en' ng-app='app'>
+    <head>
+        <title>Hi</title>
+        <script src="js/angular.js"> </script>
+        <script>
+            var appModule = angular.module('app',[]);
+
+            appModule.directive('hello',function(){
+                return{
+                    restrict: 'E',
+                    template: '<div> Hello CS701!</div>',
+                    replace: true
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <hello></hello>
+    </body>
+</html>
