@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html ng-app="time">
+    <head>
+        <script src="js/angular.js"></script>
+        <script src="ex05_clock.js"></script>
+    </head>
+    <body>
+        <div ng-controller="TimeController">
+            Date format: <input ng-model="format"><hr/>
+            Current time is: <span my-current-time="format"></span>
+        </div>
+    </body>
+</html>
