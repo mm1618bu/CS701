@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html ng-app='expanderModule'>
+    <head>
+        <title>Expander</title>
+        <script src="js/angular.js"></script>
+        <script src="ex04_expander.js"></script>
+        <link href="expander.css" rel="stylesheet">
+    </head>
+    <body>
+        <div ng-controller='TestController'>
+            <expander class='expander' expander-title='title'>{{text}}</expander>
+        </div>
+    </body>
+</html>
