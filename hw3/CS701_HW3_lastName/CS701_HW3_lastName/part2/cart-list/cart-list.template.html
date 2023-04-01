@@ -1,0 +1,34 @@
+<table>
+<caption><b>My Books</b></caption>
+  <thead>
+    <tr>
+        <th>Title</th>
+        <th>Qty</th>
+        <th>UnitPrice</th>
+        <th>$UnitPrice</th>
+        <th>Line Total</th>
+        <th>Total {{$ctrl.updateTotal() | currency}} </th>
+    </tr>
+  </thead>
+  <tbody >
+    
+   <!-- Add code for table rows -->
+
+
+    <tr>
+        <th colspan="3">
+            <button ng-click="$ctrl.addBook()">
+                    New
+            </button>
+        </th>
+        <th colspan="3">
+            <button ng-click="$ctrl.saveBooks()">
+                Save
+            </button>
+        </th>        
+    </tr>
+    
+  </tbody>
+</table>
+
+

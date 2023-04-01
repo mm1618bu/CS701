@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang='en' ng-app="myApp">
+  <head>
+   <title>Book Shopping Cart</title>
+
+  <script src="../js/angular182.js"></script>
+  <script src="hw3_part1Controller.js"></script>
+  <link rel="stylesheet" href="../css/hw3.css">
+  </head>
+
+  <body ng-controller="CartControler" ng-init="updateTotal()">
+
+    <table>
+      <caption><b>My Books</b></caption>
+      <thead>
+        <tr>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>UnitPrice</th>
+            <th>$UnitPrice</th>
+            <th>Line Total</th>
+            <th>Total </th>
+        </tr>
+      </thead>
+      <tbody >
+
+        <!-- Add Code for the table rows-->
+
+        
+
+        <tr><th colspan="3"><button ng-click="addBook()">
+                    New
+                </button></th>
+                <th colspan="3"><button ng-click="saveBooks()">
+                    Save
+                </button></th>
+                
+        </tr>
+        
+      </tbody>
+    </table>
+  </body>
+</html>
+
+
