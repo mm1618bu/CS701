@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang='en' ng-app="myApp">
+  <head>
+   <title>Book Shopping Cart</title>
+
+  <script src="../js/angular182.js"></script>
+  <script src="hw3_part1Controller.js"></script>
+  <link rel="stylesheet" href="../css/hw3.css">
+  </head>
+
+  <body ng-controller="CartControler" ng-init="updateTotal()">
+
+    <table>
+      <caption><b>My Books</b></caption>
+      <thead>
+        <tr>
+            <th>Title</th>
+            <th>Qty</th>
+            <th>UnitPrice</th>
+            <th>$UnitPrice</th>
+            <th>Line Total</th>
+            <th>Total </th>
+            <th>{{ updateTotal() | currency }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="book in books">
+          <td>{{book.title}}</td>
+          <td>
+            <input ng-model="book.qty" size="2">
+          </td>
+          <td>{{ book.price | currency }}</td>
+          <td>{{ book.price * book.qty | currency}}</td>
+          <td>{{ book.price * book.qty | currency}}</td>
+          <td>{{ updateTotal() | currency }}</td>
+          <td>
+            <button ng-click="removeBook($index)">Remove</button>
+          </td>
+        </tr>
+        
+        <tr ng-show="showAddBookRow">
+          <th><input ng-model="newBookTitle"></th>
+          <th><input ng-model="newBookQty" size="2"></th>
+          <th><input ng-model="newBookPrice"></th>
+
+          <th colspan="2"></th>
+        </tr>
+        
+      </tbody>
+      <tfoot>
+        <tr>
+          <th><button ng-click="showAddBookRowFn()">New</button></th>
+          <th><button ng-click="addBook()">Save</button></th>
+
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>    
+  </body>
+</html>
