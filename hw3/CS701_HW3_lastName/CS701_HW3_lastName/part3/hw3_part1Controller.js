@@ -8,47 +8,43 @@ angular.module('myApp', [])
     ];
       
     $scope.books = defaultBooks;
+    $scope.undoStack = [];
+    $scope.redoStack = [];
 
     $scope.removeBook = function(index) {
+        // Save the current state of the books array to the undo stack
+        $scope.undoStack.push($scope.books.slice(0));
+        // Remove the book from the books array
         $scope.books.splice(index, 1);
-    }
+        // Save the updated state of the books array to localStorage
+        $scope.saveBooks();
+    };
       
     $scope.addBook = function(){
         if ($scope.newBookTitle && $scope.newBookQty && $scope.newBookPrice) {
+            // Save the current state of the books array to the undo stack
+            $scope.undoStack.push($scope.books.slice(0));
+            // Add the new book to the books array
             $scope.books.push({
                 title: $scope.newBookTitle,
                 qty: $scope.newBookQty,
                 price: $scope.newBookPrice
             });
+            // Clear the form
             $scope.newBookTitle = '';
             $scope.newBookQty = '';
             $scope.newBookPrice = '';
+            // Save the updated state of the books array to localStorage
+            $scope.saveBooks();
         }
     };
 
     $scope.saveBooks = function() {
-        // Step 1: Retrieve saved books from localStorage
-        var savedBooks = JSON.parse(localStorage.getItem('books'));
-        if (savedBooks && savedBooks.length) {
-            $scope.books = savedBooks;
-        }
-    
-        // Step 2: Add new book to the books array
-        if ($scope.bookTitle && $scope.bookQty && $scope.bookPrice) {
-            $scope.books.push({
-                title: $scope.bookTitle,
-                qty: $scope.bookQty,
-                price: $scope.bookPrice
-            });
-            $scope.bookTitle = '';
-            $scope.bookQty = '';
-            $scope.bookPrice = '';
-        }
-    
-        // Step 3: Save updated books to localStorage
+        // Save the current state of the books array to localStorage
         localStorage.setItem('books', JSON.stringify($scope.books));
-    
-        // Step 4: Recalculate total and update view
+        // Clear the redo stack
+        $scope.redoStack = [];
+        // Recalculate total and update view
         $scope.updateTotal();
     };
     
@@ -63,5 +59,31 @@ angular.module('myApp', [])
 
     $scope.showAddBookRowFn = function() {
         $scope.showAddBookRow = true;
+    };
+
+    $scope.redo = function() {
+        var action = $scope.redoStack.pop();
+        if (action) {
+          if (action.type === 'remove') {
+            $scope.books.splice(action.index, 0, action.book);
+            $scope.undoStack.push({type: 'add', book: action.book});
+          } else if (action.type === 'add') {
+            var index = $scope.books.indexOf(action.book);
+            $scope.books.splice(index, 1);
+            $scope.undoStack.push({type: 'remove', book: action.book, index: index});
+          }
+          $scope.updateTotal();
+        }
+    };
+  
+    $scope.undo = function() {
+    if ($scope.undoStack.length > 0) {
+        // Save the current state of the books array to the redo stack
+        $scope.redoStack.push($scope.books.slice(0));
+        // Restore the previous state of the books array from the undo stack
+        $scope.books = $scope.undoStack.pop();
+        // Save the updated state of the books array to localStorage
+        $scope.saveBooks();
+    }
     };
 });
