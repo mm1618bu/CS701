@@ -35,13 +35,11 @@ angular.module("cartApp")
       };
     
       this.saveBooks = function() {
-        // Step 1: Retrieve saved books from localStorage
         var savedBooks = JSON.parse(localStorage.getItem('books'));
         if (savedBooks && savedBooks.length) {
             this.books = savedBooks;
         }
     
-        // Step 2: Add new book to the books array
         if (this.bookTitle && this.bookQty && this.bookPrice) {
             this.books.push({
                 title: this.bookTitle,

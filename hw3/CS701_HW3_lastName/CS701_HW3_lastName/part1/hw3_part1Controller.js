@@ -27,13 +27,11 @@ angular.module('myApp', [])
     };
 
     $scope.saveBooks = function() {
-        // Step 1: Retrieve saved books from localStorage
         var savedBooks = JSON.parse(localStorage.getItem('books'));
         if (savedBooks && savedBooks.length) {
             $scope.books = savedBooks;
         }
     
-        // Step 2: Add new book to the books array
         if ($scope.bookTitle && $scope.bookQty && $scope.bookPrice) {
             $scope.books.push({
                 title: $scope.bookTitle,
@@ -45,10 +43,8 @@ angular.module('myApp', [])
             $scope.bookPrice = '';
         }
     
-        // Step 3: Save updated books to localStorage
         localStorage.setItem('books', JSON.stringify($scope.books));
     
-        // Step 4: Recalculate total and update view
         $scope.updateTotal();
     };
     
