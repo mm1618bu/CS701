@@ -1,0 +1,91 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+  
+    input {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      width: 50%;
+  
+      &:focus {
+        outline: none;
+        border-color: blue;
+      }
+    }
+  
+    button {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darkblue;
+      }
+    }
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 50%;
+    margin-bottom: 1rem;
+
+    .struct{
+        background-color: black;
+        color: white;
+    }
+  
+    th,
+    td {
+      padding: 0.5rem;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+  
+    th {
+      background-color: #eee;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even){
+        background-color: grey;
+    }
+  
+    input {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      border: 1px solid #ccc;
+      text-align: center;
+      width: 100%;
+  
+      &:focus {
+        outline: none;
+        border-color: blue;
+      }
+    }
+  
+    button {
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darkred;
+      }
+    }
+  }
+  
