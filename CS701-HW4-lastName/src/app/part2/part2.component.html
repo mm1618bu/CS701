@@ -1,0 +1,15 @@
+<div>
+    <label for="inputString">Input string:</label>
+    <input id="inputString" [(ngModel)]="inputString" />
+</div>
+<div>
+    <label for="delimiter">Delimiter:</label>
+    <input id="delimiter" [(ngModel)]="delimiter" />
+</div>
+<div>
+    <input [(ngModel)]="inputText">
+<p>{{inputText}}</p>
+</div>
+<div>
+    <p>Tokenized string: {{ inputString | tokenizer:delimiter | inputText}}</p>
+</div>

@@ -1,0 +1,66 @@
+<form (ngSubmit)="addItem()">
+  <label for="newItemName">Item Name:</label>
+  <input
+    type="text"
+    [(ngModel)]="newItemName"
+    id="newItemName"
+    name="newItemName"
+    required
+  />
+  <br />
+
+  <label for="newItemPrice">Price:</label>
+  <input
+    type="number"
+    [(ngModel)]="newItemPrice"
+    id="newItemPrice"
+    name="newItemPrice"
+    required
+  />
+  <br />
+
+  <label for="newItemQuantity">Quantity:</label>
+  <input
+    type="number"
+    [(ngModel)]="newItemQuantity"
+    id="newItemQuantity"
+    name="newItemQuantity"
+    required
+  />
+  <br />
+
+  <button type="submit">Add Item</button>
+</form>
+
+<table>
+  <tbody>
+    <tr class="struct">
+      <td>Item</td>
+      <td>Price</td>
+      <td>Qty</td>
+      <td>Total</td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let item of cartItems">
+      <td>{{item.name}}</td>
+      <td>{{item.price | currency}}</td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="item.quantity"
+          (change)="updateQuantity(item)"
+          min="1"
+        />
+      </td>
+      <td>{{item.total | currency}}</td>
+      <td>
+        <button (click)="removeItem(item)">Remove</button>
+      </td>
+    </tr>
+    <tr class="struct">
+      <td colspan="3">Grand Total:</td>
+      <td>{{ calculateGrandTotal() | currency }}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
