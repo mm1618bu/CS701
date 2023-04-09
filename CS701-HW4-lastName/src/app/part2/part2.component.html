@@ -7,9 +7,5 @@
     <input id="delimiter" [(ngModel)]="delimiter" />
 </div>
 <div>
-    <input [(ngModel)]="inputText">
-<p>{{inputText}}</p>
-</div>
-<div>
-    <p>Tokenized string: {{ inputString | tokenizer:delimiter | inputText}}</p>
+    <p>Tokenized string: {{ inputString | tokenizer:delimiter}}</p>
 </div>
