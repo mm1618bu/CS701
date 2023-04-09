@@ -1,0 +1,18 @@
+<h2>Menu</h2>
+<ul>
+  <li *ngFor="let item of menu" (click)="addItem(item)">
+    {{ item.name }} - {{ item.price | currency }}
+  </li>
+</ul>
+
+<h2>Order</h2>
+<ul>
+  <li *ngFor="let item of orderItems">
+    {{ item.name }} - {{ item.price | currency }} x {{ item.quantity }}
+    <button (click)="removeItem(item)">Remove</button>
+  </li>
+</ul>
+
+<h2>Total: {{ getTotal() | currency }}</h2>
+
+<button (click)="submitOrder()">Submit Order</button>

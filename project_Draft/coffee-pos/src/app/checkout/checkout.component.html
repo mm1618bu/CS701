@@ -1,0 +1,35 @@
+<h2>Checkout</h2>
+
+<div *ngIf="orderItems.length > 0">
+  <h3>Order Summary:</h3>
+  <ul>
+    <li *ngFor="let item of orderItems">
+      {{ item.name }} - {{ item.price | currency }} x {{ item.quantity }}
+    </li>
+  </ul>
+
+  <h3>Total: {{ getTotal() | currency }}</h3>
+
+  <form (submit)="submitOrder()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="customerName">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="customerEmail">
+
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" id="cardNumber" name="cardNumber" [(ngModel)]="cardNumber">
+
+    <label for="expirationDate">Expiration Date:</label>
+    <input type="text" id="expirationDate" name="expirationDate" [(ngModel)]="expirationDate">
+
+    <label for="securityCode">Security Code:</label>
+    <input type="text" id="securityCode" name="securityCode" [(ngModel)]="securityCode">
+
+    <button type="submit">Submit Order</button>
+  </form>
+</div>
+
+<div *ngIf="orderItems.length === 0">
+  <p>You have no items in your order.</p>
+</div>
