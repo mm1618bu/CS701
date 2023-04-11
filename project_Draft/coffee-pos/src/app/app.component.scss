@@ -1,19 +1,40 @@
 header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #F8F8F8;
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #663300;
-    color: white;
-    padding: 1rem;
-    nav {
-      display: flex;
-      a {
-        margin-left: 1rem;
-        color: white;
-        &:hover {
-          color: #ffcc00;
-        }
+    justify-content: flex-end;
+    gap: 1rem;
+
+    a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5rem;
+
+      &:hover {
+        background-color: #333;
+        color: #F8F8F8;
+      }
+
+      &[routerLink=".active"] {
+        background-color: #333;
+        color: #F8F8F8;
       }
     }
   }
-  
+}
+
+app-route {
+  margin-top: 2rem;
+}
